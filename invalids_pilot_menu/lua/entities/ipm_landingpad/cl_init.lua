@@ -28,6 +28,7 @@ local function doRender(ent)
 end
 
 local function consoleRender(ent)
+
     -- Get the size of the text we are about to draw
     local text = ""
     local col = Color(255,255,255)
@@ -109,17 +110,23 @@ function ENT:Draw()
         ang = ang + Angle(0,45,45)
         local pos = Vector(max.x, min.y/2 - max.y/2, max.z + 45)
         pos = self:LocalToWorld(pos)
-        cam.Start3D2D(pos, ang, 0.1)
-            consoleRender(self)
-        cam.End3D2D()
 
+        if LocalPlayer():GetPos():Distance(pos) < 400 then
+            cam.Start3D2D(pos, ang, 0.1)
+                consoleRender(self)
+            cam.End3D2D()
+        end
+
+        
         local ang = self:GetAngles()
         ang = ang + Angle(0,-135,45)
         local pos = Vector(min.x/2 + min.y/2, max.y, max.z + 45)
         pos = self:LocalToWorld(pos)
-        cam.Start3D2D(pos, ang, 0.1)
-            consoleRender(self)
-        cam.End3D2D()
+        if LocalPlayer():GetPos():Distance(pos) < 400 then
+            cam.Start3D2D(pos, ang, 0.1)
+                consoleRender(self)
+            cam.End3D2D()
+        end
     end
 end
 
