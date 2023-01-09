@@ -127,7 +127,6 @@ function ENT:Initialize()
 
 	function self:initSelf(t, pN)
 		self.team = t
-
 		if pN == nil then
 			self.PadNumber = table.Count(iPM.SpawnPads[t]) + 1
 			self:SetPadNumber(self.PadNumber)
@@ -135,14 +134,13 @@ function ENT:Initialize()
 			self.PadNumber = pN
 			self:SetPadNumber(pN)
 		end
-
 		self:SetFaction(t)
-
 		if !table.HasValue(iPM.SpawnPads[t], self) then
 			table.insert(iPM.SpawnPads[t], self)
 		end
-		
+	
 		self.Initialized = true
+
 		timer.Create("ipm.Fuck!"..self:GetCreationID(), 0.1, 1, function()
 			net.Start("ipm_spawnpad_setup")
 				net.WriteEntity(self)
@@ -152,7 +150,7 @@ function ENT:Initialize()
 
 	net.Receive("ipm_spawnpad_setup", function(len, ply)
 		local t = net.ReadString()
-		self:initSelf(t, nil)
+		self:initSelf(t)
 	end)
 
 	hook.Add("iPM.LoadFromData", "oa"..self:GetCreationID(), function(pad, t, pN)

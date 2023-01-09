@@ -66,7 +66,7 @@ function LoadIPMSpawnPads()
 -- This chat command allows superadmins to save the 'ipm_spawnpad' entities
 concommand.Add("ipm_save", function(player)
   -- Check if the player is a superadmin
-  if not player:IsSuperAdmin() then
+  if not table.HasValue(iPM.Admins, player:GetUserGroup()) then
     -- The player is not a superadmin, so do nothing
     return
   end

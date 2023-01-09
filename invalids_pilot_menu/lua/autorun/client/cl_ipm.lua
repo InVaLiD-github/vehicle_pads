@@ -1,5 +1,5 @@
 hook.Add("iPM_Loaded", "cl", function()
-
+	iPM.WasSetup = false
 	-- Create a table to store the icons for the Tie Fighters
 	local tieFighterIcons = {}
 
@@ -79,13 +79,15 @@ hook.Add("iPM_Loaded", "cl", function()
 
 
 	function iPM.ClientSetup(ent)
-	    if table.Count(string.Explode("", ent:GetPadNumber())) == 1 then
-	        ent.PadNumber = "0"..ent:GetPadNumber()
-	    else
-	        ent.PadNumber = ent:GetPadNumber()
-	    end
+		if ent:GetPadNumber() != nil && ent:GetPadNumber() != 0  && ent.WasSetup == false then
+		    if table.Count(string.Explode("", ent:GetPadNumber())) == 1 then
+		        ent.PadNumber = "0"..ent:GetPadNumber()
+		    else
+		        ent.PadNumber = ent:GetPadNumber()
+		    end
 
-	    ent.WasSetup = true
+		    ent.WasSetup = true
+		end
 	end
 
 	net.Receive("ipm_spawnpad_setup", function()
@@ -95,10 +97,11 @@ hook.Add("iPM_Loaded", "cl", function()
 end)
 
 net.Receive("iPM.SendAllToClient", function()
+
 	if iPM == nil then iPM = {} end
 	hook.Run("iPM_Loaded") 
 	local spawnpads = net.ReadTable()
-	timer.Create("iPM.ImGoingToShitABrick", 1, 1, function()
+	timer.Create("iPM.ImGoingToShitABrick"..CurTime(), 5, 1, function()
 		for _, ent in pairs(ents.GetAll()) do
 			if ent:GetClass() == "ipm_landingpad" then
 				iPM.ClientSetup(ent)
@@ -106,4 +109,15 @@ net.Receive("iPM.SendAllToClient", function()
 		end
 	end)
 	
+end)
+
+hook.Add("SetupMove", "iPM.Fuckme", function(ply, _, cmd)
+	if !cmd:IsForced() && iPM.WasSetup == false then
+		timer.Create("iPM.Wait"..CurTime(), 1, 1, function()
+			net.Start("iPM.PlayerReady")
+			net.SendToServer()
+
+			iPM.WasSetup = true
+		end)
+	end
 end)

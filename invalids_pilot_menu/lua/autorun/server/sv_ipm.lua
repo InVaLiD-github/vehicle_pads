@@ -1,6 +1,7 @@
 
 -- Create a net message for spawning Tie Fighters
 util.AddNetworkString("spawn_tie_fighter")
+util.AddNetworkString("iPM.PlayerReady")
 
 if iPM == nil then iPM = {} end
 
@@ -40,7 +41,8 @@ hook.Add("iPM_Loaded", "sv", function()
 
 	-- Create a chat command for accessing the vgui
 	hook.Add("PlayerSay", "iPM.PlayerSay", function(ply, txt, team)
-		if (txt == "!pilot" or txt == "/pilot") or (txt == "!spawn" or "/spawn") then
+		local exp = string.Explode("", txt)
+		if (txt == "!pilot" or txt == "/pilot") or (txt == "!spawn" or txt == "/spawn") && table.Count(exp) == 6 then
 
 			for name,v in pairs(iPM.Teams) do
 				if iPM.Teams[name]["TEAMS"][ply:Team()] != nil then
@@ -80,14 +82,15 @@ hook.Add("iPM_Loaded", "sv", function()
 
 				local function CreateTIEFighter(pad)
 					local tieFighter = ents.Create(selectedFighter)
-					tieFighter:Spawn()
-					tieFighter:Activate()
+					
 					local angleOffset = Angle(0,0,0)
 					for class,angle in pairs(iPM.Offsets) do
 						if tieFighter:GetClass() == class then
 							angleOffset = angle
 						end
 					end
+					tieFighter:SetPos(pad:GetPos())
+					tieFighter:Spawn()
 					tieFighter:SetAngles(pad:GetAngles() + angleOffset)
 					local pos1 = pad:GetPos()
 					local maxs1 = pad:OBBMaxs()
@@ -100,22 +103,27 @@ hook.Add("iPM_Loaded", "sv", function()
 					if physObj:IsValid() then
 						physObj:EnableMotion(false)
 						tieFighter.oldMaterial = tieFighter:GetMaterial()
-						timer.Create("iPM.stophammertime"..tieFighter:GetCreationID(), 0, 58, function()
+						timer.Create("iPM.stophammertime"..tieFighter:GetCreationID(), 0, 1, function()
 							if physObj:IsValid() then
 								physObj:EnableMotion(false)
 								physObj:SetVelocity(Vector(0,0,0))
 								tieFighter:SetMaterial("Models/effects/comball_tape")
 								tieFighter:SetRenderMode(1)
 								tieFighter:SetColor(Color(255,0,0))
+								tieFighter:SetPos(pos1 - Vector(0, 0, height1-height2/1.9))
 							end
 						end)
-						timer.Create("iPM.WaitforAnim"..tieFighter:GetCreationID(), 4, 1, function()
+						timer.Create("iPM.WaitforAnim"..tieFighter:GetCreationID(), 0.5, 1, function()
 							if physObj:IsValid() then
 								physObj:EnableMotion(true)
 								physObj:SetVelocity(Vector(0,0,-1))
 								tieFighter:SetMaterial(tieFighter.oldMaterial)
 								tieFighter:SetColor(Color(255,255,255))
+								tieFighter:SetPos(pos1 - Vector(0, 0, height1-height2/1.9))
 							end
+
+							
+							tieFighter:Activate()
 						end)
 					end
 					tieFighter:SetPos(pos1 - Vector(0, 0, height1-height2/1.9))
@@ -157,13 +165,9 @@ hook.Add("iPM_Loaded", "sv", function()
 			end
 		end
 
+	end) 
+
+	net.Receive("iPM.PlayerReady", function(len, ply)
+		iPM.SendPadsToPlayer(ply)
 	end)
-
-	hook.Add("PlayerInitialSpawn", "iPM.PlayerLoaded", function(ply)
-		timer.Create("iPM.waitonply"..ply:SteamID(), 0, 1, function()
-
-			iPM.SendPadsToPlayer(ply)
-		end)
-	end)
-
 end)

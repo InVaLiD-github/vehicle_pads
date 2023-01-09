@@ -60,72 +60,73 @@ end
 
 function ENT:Draw()
     self:DrawModel()
-
     if self.WasSetup == true then
+        if self:GetFaction() != "" then
 
-        local col = Color(iPM.Teams[self:GetFaction()]["COLOR"][1], iPM.Teams[self:GetFaction()]["COLOR"][2], iPM.Teams[self:GetFaction()]["COLOR"][3])
+            local col = Color(iPM.Teams[self:GetFaction()]["COLOR"][1], iPM.Teams[self:GetFaction()]["COLOR"][2], iPM.Teams[self:GetFaction()]["COLOR"][3])
 
-        local min, max = self:GetModelBounds()
-        local minWorld, maxWorld = self:LocalToWorld(min), self:LocalToWorld(max)
+            local min, max = self:GetModelBounds()
+            local minWorld, maxWorld = self:LocalToWorld(min), self:LocalToWorld(max)
 
-        -- Calculate the width and height of the rectangle in world coordinates
-        local width = (maxWorld - minWorld):Length()
-        local height = (maxWorld - minWorld):Length()
+            -- Calculate the width and height of the rectangle in world coordinates
+            local width = (maxWorld - minWorld):Length()
+            local height = (maxWorld - minWorld):Length()
 
-        cam.Start3D2D(self:GetPos(), self:GetAngles(), 0.7)
-          surface.SetDrawColor(iPM.Teams[self:GetFaction()]["COLOR"][1], iPM.Teams[self:GetFaction()]["COLOR"][2], iPM.Teams[self:GetFaction()]["COLOR"][3], 255)
-          surface.DrawOutlinedRect(-width/2, -height/2, width, height, 4)
-        cam.End3D2D()
-
-        cam.Start3D2D(self:GetPos(), self:GetAngles(), 1)
-            surface.DrawCircle(0, 0, 100, col)
-            surface.DrawCircle(0, 0, 75, col)
-            surface.DrawCircle(0, 0, 50, col)
-            surface.DrawCircle(0, 0, 25, Color(255,255,255))
-            surface.DrawCircle(0, 0, 5, Color(255,255,255))
-        cam.End3D2D()
-
-        local min, max = self:GetModelBounds()
-        local corner1 = max + Vector(0, 0, 10)
-        local cornerWorld1 = self:LocalToWorld(corner1)
-
-        local ang = self:GetAngles()
-
-        ang.y = LocalPlayer():EyeAngles().y - 90
-        ang.z = 90
-
-        cam.Start3D2D(cornerWorld1, ang, 0.25)
-            doRender(self)
-        cam.End3D2D()
-
-        local corner2 = min
-        corner2.z = corner1.z
-        local cornerWorld2 = self:LocalToWorld(corner2)
-
-        cam.Start3D2D(cornerWorld2, ang, 0.25)
-            doRender(self)
-        cam.End3D2D()
-
-        local ang = self:GetAngles()
-        ang = ang + Angle(0,45,45)
-        local pos = Vector(max.x, min.y/2 - max.y/2, max.z + 45)
-        pos = self:LocalToWorld(pos)
-
-        if LocalPlayer():GetPos():Distance(pos) < 400 then
-            cam.Start3D2D(pos, ang, 0.1)
-                consoleRender(self)
+            cam.Start3D2D(self:GetPos(), self:GetAngles(), 0.7)
+              surface.SetDrawColor(iPM.Teams[self:GetFaction()]["COLOR"][1], iPM.Teams[self:GetFaction()]["COLOR"][2], iPM.Teams[self:GetFaction()]["COLOR"][3], 255)
+              surface.DrawOutlinedRect(-width/2, -height/2, width, height, 4)
             cam.End3D2D()
-        end
 
-        
-        local ang = self:GetAngles()
-        ang = ang + Angle(0,-135,45)
-        local pos = Vector(min.x/2 + min.y/2, max.y, max.z + 45)
-        pos = self:LocalToWorld(pos)
-        if LocalPlayer():GetPos():Distance(pos) < 400 then
-            cam.Start3D2D(pos, ang, 0.1)
-                consoleRender(self)
+            cam.Start3D2D(self:GetPos(), self:GetAngles(), 1)
+                surface.DrawCircle(0, 0, 100, col)
+                surface.DrawCircle(0, 0, 75, col)
+                surface.DrawCircle(0, 0, 50, col)
+                surface.DrawCircle(0, 0, 25, Color(255,255,255))
+                surface.DrawCircle(0, 0, 5, Color(255,255,255))
             cam.End3D2D()
+
+            local min, max = self:GetModelBounds()
+            local corner1 = max + Vector(0, 0, 10)
+            local cornerWorld1 = self:LocalToWorld(corner1)
+
+            local ang = self:GetAngles()
+
+            ang.y = LocalPlayer():EyeAngles().y - 90
+            ang.z = 90
+
+            cam.Start3D2D(cornerWorld1, ang, 0.25)
+                doRender(self)
+            cam.End3D2D()
+
+            local corner2 = min
+            corner2.z = corner1.z
+            local cornerWorld2 = self:LocalToWorld(corner2)
+
+            cam.Start3D2D(cornerWorld2, ang, 0.25)
+                doRender(self)
+            cam.End3D2D()
+
+            local ang = self:GetAngles()
+            ang = ang + Angle(0,45,45)
+            local pos = Vector(max.x, min.y/2 - max.y/2, max.z + 45)
+            pos = self:LocalToWorld(pos)
+
+            if LocalPlayer():GetPos():Distance(pos) < 400 then
+                cam.Start3D2D(pos, ang, 0.1)
+                    consoleRender(self)
+                cam.End3D2D()
+            end
+
+            
+            local ang = self:GetAngles()
+            ang = ang + Angle(0,-135,45)
+            local pos = Vector(min.x/2 + min.y/2, max.y, max.z + 45)
+            pos = self:LocalToWorld(pos)
+            if LocalPlayer():GetPos():Distance(pos) < 400 then
+                cam.Start3D2D(pos, ang, 0.1)
+                    consoleRender(self)
+                cam.End3D2D()
+            end
         end
     end
 end
