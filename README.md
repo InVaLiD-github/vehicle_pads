@@ -2,6 +2,7 @@
 
 REQUIRES A DARKRP DERIVED GAMEMODE!
 
+SAVE YOUR PADS IN CONSOLE WITH THE COMMAND 'ipm_save'!
 
 Originally designed by me for tie fighters in a SWRP server, I've edited it to work for nearly any vehicle and also made this GitHub for it.
 
