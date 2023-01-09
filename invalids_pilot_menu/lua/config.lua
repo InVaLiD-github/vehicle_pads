@@ -35,57 +35,7 @@ iPM.Admins = {"superadmin"}
 
 iPM.Teams = {// Don't Touch
 
-	["IMPERIALS"] = {
-		["TEAMS"] = {
-			[TEAM_PILOT] = {"kingpommes_lfs_tie_fighter", "lunasflightschool_tiebomberdigger", "lfs-imperial-laat"},
-			[TEAM_PILOTACE] = {"kingpommes_lfs_tie_fighter", "lunasflightschool_tiebomberdigger", "lfs-imperial-laat", "lunasflightschool_tieinterceptordigger"},
-			[TEAM_ELITEPILOT] = {"kingpommes_lfs_tie_fighter", "lunasflightschool_tiebomberdigger", "lfs-imperial-laat", "lunasflightschool_tieinterceptordigger", "lfs_tiehunter"},
-			[TEAM_STTNK] = {"lunasflightschool_niksacokica_k79-s80", "lfs_at_dp", "tkaro_lfs_tx225", "lunasflightschool_niksacokica_tx-427_imperial"},
-			[TEAM_STSCT] = {"lunasflightschool_niksacokica_74-z_speeder_bike"},
-			[TEAM_ST] = {},
-			[TEAM_STHVY] = {},
-			[TEAM_STRM] = {},
-			[TEAM_STJT] = {},
-			[TEAM_STCMDR] = {},
-			[TEAM_SHOCK] = {},
-			[TEAM_SHOCKCMDR] = {},
-			[TEAM_SHOCKEXC] = {},
-			[TEAM_SHOCKDT] = {},
-			[TEAM_SPECOPSGG] = {},
-			[TEAM_SPECOPSDT] = {},
-			[TEAM_SPECOPSDTCO] = {},
-		},
-		["COLOR"] = {88, 175, 252}
-	},
-
-	["REBELS"] = {
-		["TEAMS"] = {
-			[TEAM_REBELPILOT] = {"lfs_x-wing", "lfs_ywing", "lunasflightschool_laatigunship"},
-			[TEAM_REBELPILOTACE] = {"lfs_x-wing", "lfs_ywing", "lunasflightschool_laatigunship", "starwarssquadrons_rz1_awing", "bwing"},
-			[TEAM_RebelLightInfantry] = {},
-			[TEAM_RebelLightInfantryHVY] = {},
-			[TEAM_RebelLightInfantryMSKM] = {},
-			[TEAM_RebelLightInfantryMD] = {},
-			[TEAM_RebelLightInfantryGUR] = {},
-			[TEAM_RebelSpecForceCOM] = {},
-			[TEAM_RebelSpecForceINF] = {},
-			[TEAM_REBELCOMMANDSPY] = {},
-			[TEAM_REBELCOMMANDCOMCMDR] = {},
-			[TEAM_REBELCOMMANDGEN] = {},
-		},
-		["COLOR"] = {211, 52, 18}
-	},
-
-	["MERCENARIES"] = {
-		["TEAMS"] = {
-			[TEAM_JAGER] = {"lunasflightschool_gauntlet"},
-			[TEAM_MANDALORIANS] = {"lunasflightschool_gauntlet"},
-			[TEAM_BOBA_FETT] = {"lunasflightschool_jack_slave1", "lunasflightschool_gauntlet"},
-			[TEAM_MERCENARIES] = {},
-			[TEAM_IGUNITS] = {},
-		},
-		["COLOR"] = {209, 90, 252}
-	},
+	-- Put team code in here, and delete this comment :)
 
 }// Don't Touch
 
