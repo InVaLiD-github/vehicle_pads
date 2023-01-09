@@ -54,21 +54,6 @@ iPM.Offsets = { // Don't Touch
 } // Don't touch
 
 
-for k,v in pairs(iPM.Teams['IMPERIALS']["TEAMS"]) do
-	table.insert(v, "lunasflightschool_niksacokica_skiff")
-	table.insert(v, "lunasflightschool_niksacokica_swroftv")
-end
-
-for k,v in pairs(iPM.Teams['REBELS']["TEAMS"]) do
-	table.insert(v, "lunasflightschool_niksacokica_skiff")
-	table.insert(v, "lunasflightschool_niksacokica_swroftv")
-end
-
-for k,v in pairs(iPM.Teams['MERCENARIES']["TEAMS"]) do
-	table.insert(v, "lunasflightschool_niksacokica_skiff")
-end
-
-
 
 
 
