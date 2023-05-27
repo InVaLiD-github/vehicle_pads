@@ -13,7 +13,7 @@ This was made for a specific server, as I've said. It may not work on your serve
 Dw about a license, idk just go fuckin ham! anything goes but just make sure to credit me at the very least :)
 
 The script supports multiple factions, of which can have specific vehicles per job, that way you can seperate out who can spawn what.
-![20230105011806_1](https://github.com/InVaLiD-github/vehicle_pads/assets/53881893/230cdbe3-e73a-4fba-b1c0-f86e144b9b2e)
+![20230105011738_1](https://github.com/InVaLiD-github/vehicle_pads/assets/53881893/a3651e25-e554-4bcc-bab9-a1eb5c2ae633)
 ![20230105012056_1](https://github.com/InVaLiD-github/vehicle_pads/assets/53881893/e358b3b9-f14d-4da9-b9e5-5e6162ffc2c3)
 
 There's a (theoretical) unlimited amount of factions that can be added, so go ham!
