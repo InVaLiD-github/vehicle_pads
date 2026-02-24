@@ -1,3 +1,15 @@
+function iPM.ClientSetup(ent, padnumber)
+	if ent == nil or !ent:IsValid() then print("ENTITY IS NULL") return end
+	print("setting up "..padnumber, ent)
+	if table.Count(string.Explode("", padnumber)) == 1 then
+		ent.PadNumber = "0"..padnumber
+	else
+		ent.PadNumber = padnumber
+	end
+
+	ent.WasSetup = true
+end
+
 hook.Add("iPM_Loaded", "cl", function()
 	-- Create a table to store the icons for the Tie Fighters
 	local tieFighterIcons = {}
@@ -73,38 +85,17 @@ hook.Add("iPM_Loaded", "cl", function()
 
 		-- Set the button's color based on the cooldown status
 		button:SetColor(onCooldown and Color(100, 100, 100) or Color(255, 255, 255))
-
 	end)
-
-	function iPM.ClientSetup(ent)
-		if ent:GetPadNumber() != nil && ent:GetPadNumber() != 0  && ent.WasSetup == false then
-		    if table.Count(string.Explode("", ent:GetPadNumber())) == 1 then
-		        ent.PadNumber = "0"..ent:GetPadNumber()
-		    else
-		        ent.PadNumber = ent:GetPadNumber()
-		    end
-
-		    ent.WasSetup = true
-		end
-	end
 end)
 
-net.Receive("ipm_spawnpad_setup", function()
-	local ent = net.ReadEntity()
-	iPM.ClientSetup(ent)
+hook.Add("InitPostEntity", "iPM._IPE", function()
+	net.Start("iPM.PlayerReady")
+	net.SendToServer()
 end)
 
-net.Receive("iPM.SendAllToClient", function()
+net.Receive("iPM.ClientSetup", function()
+	local pad = net.ReadEntity()
+	local number = net.ReadInt(32)
 
-	if iPM == nil then iPM = {} end
-	hook.Run("iPM_Loaded") 
-	local spawnpads = net.ReadTable()
-	timer.Create("iPM.ImGoingToShitABrick"..CurTime(), 5, 1, function()
-		for _, ent in pairs(ents.GetAll()) do
-			if ent:GetClass() == "ipm_landingpad" then
-				iPM.ClientSetup(ent)
-			end
-		end
-	end)
-	
+	iPM.ClientSetup(pad, number)
 end)

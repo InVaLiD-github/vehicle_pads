@@ -14,6 +14,10 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Occupied")
 end
 
+function ENT:UpdateTransmitState()
+    return TRANSMIT_ALWAYS
+end
+
 function ENT:Initialize()
  
 	if iPM == nil then iPM = {} end
@@ -141,11 +145,10 @@ function ENT:Initialize()
 	
 		self.Initialized = true
 
-		timer.Create("ipm.Fuck!"..self:GetCreationID(), 0.1, 1, function()
-			net.Start("ipm_spawnpad_setup")
-				net.WriteEntity(self)
-			net.Broadcast()
-		end)
+		net.Start("iPM.ClientSetup")
+			net.WriteEntity(self)
+			net.WriteInt(self.PadNumber, 32)
+		net.Broadcast()
 	end
 
 	net.Receive("ipm_spawnpad_setup", function(len, ply)

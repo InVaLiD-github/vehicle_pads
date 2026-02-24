@@ -8,7 +8,7 @@ function ENT:Initialize()
         self.PadNumber = self:GetPadNumber()
     end
 
-    if self.WasSetup == nil then self.WasSetup = false end
+    --if self.WasSetup == nil then self.WasSetup = false end
 end
 
 local function doRender(ent)

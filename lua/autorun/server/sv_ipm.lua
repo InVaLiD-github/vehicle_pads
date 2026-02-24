@@ -2,22 +2,20 @@
 -- Create a net message for spawning Tie Fighters
 util.AddNetworkString("spawn_tie_fighter")
 util.AddNetworkString("iPM.PlayerReady")
+util.AddNetworkString("iPM.ClientSetup")
 
 if iPM == nil then iPM = {} end
 
 function iPM.SendPadsToPlayer(ply)
-	local tbl = {}
-	for t, _ in pairs(iPM.SpawnPads) do
-		for __, pad in pairs(iPM.SpawnPads[t]) do
-			if pad.team != nil && pad.PadNumber != nil then
-				table.insert(tbl, {pad, pad.team, pad.PadNumber})
-			end
+	for t, pads in pairs(iPM.SpawnPads) do
+		for number, pad in pairs(pads) do
+			net.Start("iPM.ClientSetup")
+				print(pad)
+				net.WriteEntity(pad)
+				net.WriteInt(number, 32)
+			net.Send(ply)
 		end
 	end
-
-	net.Start('iPM.SendAllToClient')	
-		net.WriteTable(tbl)
-	net.Send(ply)
 end
 
 hook.Add("iPM_Loaded", "sv", function()
